@@ -1,0 +1,1 @@
+<?php $filesInfo = ["/bitrix/components/bitrix/socialnetwork.admin.set/templates/.default/script.js" => "17624317292527","/bitrix/components/bitrix/socialnetwork.log.ex/templates/.default/script.js" => "17624317292044",]; ?>
