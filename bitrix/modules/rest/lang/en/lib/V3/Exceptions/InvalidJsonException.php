@@ -1,2 +1,0 @@
-<?php
-$MESS["REST_INVALID_JSON_EXCEPTION"] = "Invalid JSON.";

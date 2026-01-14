@@ -1,2 +1,0 @@
-<?
-$MESS["IM_LIST_CONTAINER_TASK_HEADER_TITLE"] = "Задачи";
