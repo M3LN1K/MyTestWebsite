@@ -1,0 +1,17 @@
+/bitrix
+/upload
+/.htaccess
+/vendor
+/local/vendor
+/local/cache
+/local/tmp
+.idea
+.bash_history
+.viminfo
+.DS_Store
+.php_cs.cache
+.vscode
+
+*.zip
+*.log
+*.txt
