@@ -74,20 +74,6 @@
 </footer>
 
 <?php
-// интеграция скриптов
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/vendor/jquery-1.12.0.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/bootstrap.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/owl.carousel.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.counterup.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/waypoints.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.magnific-popup.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.mixitup.min.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.meanmenu.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.nav.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.parallax-1.1.3.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/animate-text.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/plugins.js');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/main.js');
 ?>
 </body>
 </html>

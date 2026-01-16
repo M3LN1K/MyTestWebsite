@@ -38,6 +38,21 @@ use Bitrix\Main\Page\Asset;
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/assets/css/responsive.css');
 
     Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/vendor/modernizr-2.8.3.min.js');
+    // интеграция скриптов
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/vendor/jquery-1.12.0.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/bootstrap.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/owl.carousel.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.counterup.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/waypoints.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.magnific-popup.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.mixitup.min.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.meanmenu.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.nav.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/jquery.parallax-1.1.3.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/animate-text.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/plugins.js');
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/assets/js/main.js');
+
     ?>
     <?php
     // выводи метатегов шапки и кодировки
@@ -211,7 +226,7 @@ use Bitrix\Main\Page\Asset;
         <div class="row z-index">
             <div class="col-md-7 col-sm-6">
                 <div class="breadcrumb-title">
-                    <h2 class="white-text">О студии</h2>
+                    <h2 class="white-text"><?=$APPLICATION->ShowTitle(false); ?></h2>
                 </div>
             </div>
             <div class="col-md-5 col-sm-6">
