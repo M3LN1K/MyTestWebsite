@@ -1,12 +1,12 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("О нас");
-$APPLICATION->SetPageProperty("keywords", "о нас, компания, работа");
-$APPLICATION->SetPageProperty("description", "Информация о компании");
+$APPLICATION->SetTitle("Наши достижения");
+$APPLICATION->SetPageProperty("keywords", "Наши достижения");
+$APPLICATION->SetPageProperty("description", "Наши достижения");
 
 // Задаем свойство страницы
 // Задаем тайтл странице
-$APPLICATION->SetPageProperty("TITLE", "О нас | We project");
+$APPLICATION->SetPageProperty("TITLE"," Достижения | We project");
 
 
 ?>
@@ -15,5 +15,5 @@ $APPLICATION->SetPageProperty("TITLE", "О нас | We project");
 // Вывод свойств на странице
 "Описание =".$APPLICATION-> GetPageProperty('description')
 ?>
-<p><h1>О нас</h1></p>
+<p><h1>Наши достижения</h1></p>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
