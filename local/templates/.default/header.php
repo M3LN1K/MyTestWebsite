@@ -2,6 +2,12 @@
 IncludeTemplateLangFile(__FILE__);
 
 use Bitrix\Main\Page\Asset;
+
+// Получаем путь текущей страницы
+$curPage = $APPLICATION->GetCurPage();
+// Проверяем, главная ли это страница
+$isMainPage = ($curPage == '/' || $curPage == SITE_DIR);
+
 ?>
 
 
@@ -9,7 +15,6 @@ use Bitrix\Main\Page\Asset;
 <html class="no-js" lang="en">
 <head>
 
-    <?$APPLICATION->ShowHead();?>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title><?$APPLICATION->ShowTitle();?></title>
@@ -79,8 +84,32 @@ use Bitrix\Main\Page\Asset;
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="welcome">
-                    <span><i class="fa fa-envelope"></i> admin@domain.com</span>
-                    <span><i class="fa fa-phone"></i> +012 345 6789</span>
+                    <span>
+                        <? // Вставка включаемой области
+                        $APPLICATION->IncludeComponent(
+                        	"bitrix:main.include",
+                        	".default",
+                        	array(
+                        		// region Параметры компонента
+                        		"AREA_FILE_SHOW"    =>  "file",  // Показывать включаемую область : array ( 'page' => 'для страницы', 'sect' => 'для раздела', )
+                        		"PATH" => SITE_TEMPLATE_PATH."/include/mail.php"
+                        		// endregion
+                        	)
+                        );  ?>
+                    </span>
+                    <span>
+                        <? // Вставка включаемой области
+                        $APPLICATION->IncludeComponent(
+                                "bitrix:main.include",
+                                ".default",
+                                array(
+                                    // region Параметры компонента
+                                        "AREA_FILE_SHOW"    =>  "file",  // Показывать включаемую область : array ( 'page' => 'для страницы', 'sect' => 'для раздела', )
+                                        "PATH" => SITE_TEMPLATE_PATH."/include/phone.php"
+                                    // endregion
+                                )
+                        );  ?>
+                    </span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
@@ -99,7 +128,7 @@ use Bitrix\Main\Page\Asset;
 </div>
 
 <!-- Шапка сайта (меню) -->
-<header id="sticky-header" class="header-area header-wrapper white-bg">
+<header id="sticky-header" class="header-area header-wrapper transparent-header ">
     <!-- Меню (для десктопа) -->
     <div class="header-middle-area full-width">
         <div class="container">
@@ -207,7 +236,7 @@ use Bitrix\Main\Page\Asset;
     </div>
 </header>
 
-<!-- Хлебные крошки (навигация) -->
+<!--Хлебные крошки (навигация) -->
 <div class="breadcrumb-area brand-bg ptb-100">
     <div class="container width-100">
         <div class="row z-index">
@@ -216,18 +245,17 @@ use Bitrix\Main\Page\Asset;
                     <h2 class="white-text"><?=$APPLICATION->ShowTitle(false); ?></h2>
                 </div>
             </div>
-            <div class="col-md-5 col-sm-6">
+           <div class="col-md-5 col-sm-6">
                 <div class="breadcrumb-menu">
-                    <ol class="breadcrumb text-right">
+                   <ol class="breadcrumb text-right">
                         <li>
                             <a href="index.html">Главная</a>
-                        </li>
-                        <li>
-                            <a href="#">О нас</a>
-                        </li>
-                    </ol>
+                      </li>
+                       <li>
+                           <a href="#">О нас</a>
+                     </li>
                 </div>
-            </div>
-        </div>
+           </div>
+       </div>
     </div>
 </div>

@@ -1,0 +1,211 @@
+/*our_successes st*/
+    /* Базовые стили для текста 24px */
+.period-text,
+.achievement-text,
+.quote-text,
+.value-name,
+.value-description,
+.conclusion-text {
+    font-size: 24px;
+    line-height: 1.4;
+}
+
+/* Стили для заголовков с годами */
+.period-title {
+    font-size: 32px; /* немного больше для заголовков */
+    margin-bottom: 16px;
+}
+
+.period-year {
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 16px;
+    color: #2c5282; /* синий цвет для лет */
+}
+
+.period-year-range {
+    min-width: 100px; /* для выравнивания диапазонов лет */
+}
+
+.period-year-current {
+    color: #e53e3e; /* красный цвет для текущего года */
+}
+
+/* Дополнительные стили для улучшения читаемости */
+.period-title-text {
+    font-weight: 600;
+}
+
+.achievement-item {
+    margin-bottom: 8px;
+}
+
+.achievement-icon {
+    margin-right: 12px;
+    color: #38a169; /* зеленый цвет для маркеров */
+}
+
+.philosophy-quote {
+    font-style: italic;
+    border-left: 4px solid #f6ad55;
+    padding-left: 20px;
+    margin: 20px 0;
+}
+
+.value-item {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.value-icon {
+    color: #38a169;
+    margin-right: 12px;
+    font-size: 24px;
+}
+
+.value-content {
+    display: inline-block;
+}
+
+/*our_successes style*/
+
+
+         /* Базовые стили для текста 24px */
+     .achievements-description,
+     .achievements-conclusion,
+     .achievement-description {
+         font-size: 24px;
+         line-height: 1.5;
+         margin-top: 8px;
+         margin-bottom: 24px;
+     }
+
+    /* Заголовки H1 */
+    .achievements-main-title,
+    .category-title,
+    .subsection-title,
+    .achievement-year,
+    .achievement-name {
+        font-size: 28px; /* Чуть больше базового */
+        line-height: 1.3;
+        margin-bottom: 12px;
+    }
+
+    /* Основные стили для структуры */
+    .achievements {
+        padding: 40px 0;
+    }
+
+    .achievements-main-title {
+        text-align: center;
+        margin-bottom: 48px;
+        color: #2d3748;
+    }
+
+    /* Категории достижений */
+    .achievements-category {
+        margin-bottom: 48px;
+        padding-bottom: 32px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .achievements-category:last-of-type {
+        border-bottom: none;
+    }
+
+    .category-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #2c5282;
+        margin-bottom: 32px;
+    }
+
+    .category-icon {
+        font-size: 32px;
+    }
+
+    /* Подразделы */
+    .category-subsection {
+        margin-bottom: 40px;
+    }
+
+    .subsection-title {
+        color: #4a5568;
+        margin-bottom: 24px;
+        padding-left: 16px;
+        border-left: 4px solid #38a169;
+    }
+
+    /* Списки достижений */
+    .achievements-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .achievement-item {
+        margin-bottom: 32px;
+        padding: 20px;
+        background: #f7fafc;
+        border-radius: 8px;
+        border-left: 4px solid #4299e1;
+    }
+
+    .achievement-year {
+        color: #2b6cb0;
+    }
+
+    .achievement-name {
+        color: #2d3748;
+    }
+
+    /* Особые стили для будущих целей */
+    .future-goals .achievement-item {
+        border-left-color: #9f7aea;
+        background: #faf5ff;
+    }
+
+    .goals-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+    }
+
+    .goal-item {
+        margin-bottom: 0;
+    }
+
+    /* Футер */
+    .achievements-footer {
+        margin-top: 60px;
+        padding: 30px;
+        background: #ebf8ff;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .achievements-conclusion {
+        color: #2d3748;
+        font-style: italic;
+        margin: 0;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .goals-list {
+            grid-template-columns: 1fr;
+        }
+
+        .achievement-item {
+            padding: 16px;
+        }
+
+        .category-title,
+        .subsection-title,
+        .achievement-year,
+        .achievement-name {
+            font-size: 26px;
+        }
+    }
+
