@@ -10,11 +10,11 @@
                     <div class="col-md-3 col-sm-3">
                         <div class="single-count white-text text-center">
                             <!--выводим текст для отображения иконки-->
-                            <?= isset($arItem['DETAIL_TEXT'])?$arItem['DETAIL_TEXT'] : " "; ?>
+                            <?= $arItem['DETAIL_TEXT'] ?? " "; ?>
                             <!--вывод текста анонса-->
-                            <h2 class="counter"><?= isset($arItem['PREVIEW_TEXT'])?$arItem['PREVIEW_TEXT'] : " "; ?></h2>
+                            <h2 class="counter"><?= $arItem['PREVIEW_TEXT'] ?? " "; ?></h2>
                             <!--выводим имя элемента-->
-                            <p><?= isset($arItem['NAME'])?$arItem['NAME'] : " "; ?></p>
+                            <p><?= $arItem['NAME'] ?? " "; ?></p>
                         </div>
                     </div>
                 <?php endforeach; ?>

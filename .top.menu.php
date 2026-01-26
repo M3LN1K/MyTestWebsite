@@ -15,15 +15,15 @@ $aMenuLinks = [
         ""
     ],
     [
-        "История ",
-        "/about/history.php",
+        "Портфолио",
+        "/portfolio/",
         [],
         [],
         ""
     ],
     [
-        "Достижения",
-        "/about/our_successes.php",
+        "Услуги",
+        "/services/",
         [],
         [],
         ""
