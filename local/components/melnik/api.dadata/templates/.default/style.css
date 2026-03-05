@@ -1,0 +1,23 @@
+
+
+.company-item{
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom:5px ;
+    border-radius: 4px;
+}
+.company-detail {
+    display: none;
+}
+.company-detail.active {
+    display: flex;
+    flex-direction: column;
+}
+.js-companies-by-inn-templates-container{
+    display: none;
+}
+
+.js-search_input{
+    border: 1px solid black;
+    border-radius: 10px;
+}
