@@ -6,7 +6,7 @@
     margin-bottom:5px ;
     border-radius: 4px;
 }
-.company-detail {
+.company-detail  {
     display: none;
 }
 .company-detail.active {

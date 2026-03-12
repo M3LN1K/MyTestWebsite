@@ -19,6 +19,7 @@ $jsParams = [
         <input type="text" class="js-search_input">
     </label>
 
+<!--    Добавил список для вывода результата запроса в DADATA-->
     <div class="search-result">
         <h3>Результаты поиска: </h3>
         <div class="js-search-list"></div>
@@ -67,7 +68,6 @@ $jsParams = [
                 <button class="btn btn-delete">Удалить в инфоблок</button>
             </div>
         </div>
-    </div>
 </div>
 
 <script>
@@ -78,12 +78,12 @@ $jsParams = [
     let templatesContainer = document.querySelector('.js-companies-by-inn-templates-container'); // В общем пространстве ищу класс .js-companies-by-inn-templates-container для работы с его внутренними элементами
     let companyItemTemplate = templatesContainer.querySelector('.company-item'); // В пространстве .js-search-list ищу класс .company-item для занесения данных в верстку
     let searchListContainer = document.querySelector('.search-result .js-search-list') // В пространстве .js-companies-by-inn-templates-container ищу класс .js-search-list для занесения данных в верстку
-    let iblockContainer = document.querySelector('.iblock-items-container'); // В пространстве .companies__list ищу .iblock-items-container для работы с его внутренними элементами
+
 
 
     input.addEventListener("input", searchInputHandler);
-
-    function searchInputHandler(e){
+    // ОБРАБОТЧИК ПОЛЯ ВВОДА
+    function searchInputHandler(e) {
         let input = e.currentTarget;
         let inputValue = input.value;
         // Проверка на минимальную длину запроса
@@ -91,59 +91,83 @@ $jsParams = [
             searchListContainer.innerHTML = ''; // Очищает контеинер
             return;
         }
-
+        // ПОЛУЧЕНИЕ
         getDataByInn(inputValue)
             .then(res => onGetDataByInnSuccess(res));
     }
 
-    function onGetDataByInnSuccess(res) {
-        let data = JSON.parse(res);
-        searchListContainer.innerHTML = '';
-        // Делаем условие при котором не будут найдены элементы запроса в DADATA
-        if (!data.suggestions || data.suggestions.length === 0) {
-            searchListContainer.innerHTML = '<p>Ничего не найдено</p>';
-            return;
-        }
-        data.suggestions.forEach(item => {
-            let companyElement = prepareCompanyItemTemplate(item);
-            // Добавление в контеинер
-            searchListContainer.appendChild(companyElement);
+    function addBtnHandler(e){
+        e.preventDefault();//без перезагрузки страницы
+
+
+        BX.ajax({
+            url: '/local/components/melnik/api.dadata/templates/.default/ajax/save_company.php',
+            method: 'POST',
+            data: {
+                iblock_id: 15,
+                name: res.name,
+                inn: res.inn,
+                ogrn: res.ogrn,
+                address: res.address
+            },
+            onsuccess: addSuccessHandler,
+            onfailure:onBtnFailureHandler
         });
     }
-    function prepareCompanyItemTemplate(itemData){
-        // Запись в переменные значений массива
-        let name = itemData.value;
-        let inn = itemData.data.inn;
-        let ogrn = itemData.data.ogrn;
-        let address = itemData.data.address?.value;
+        function onGetDataByInnSuccess(res) {
+            const data = JSON.parse(res);
+            // Делаем условие при котором не будут найдены элементы запроса в DADATA
+            if (!data.suggestions || data.suggestions.length === 0) {
+                searchListContainer.innerHTML = '<p>Ничего не найдено</p>';
+            }
+            data.suggestions.forEach(item => {
+                let companyElement = prepareCompanyItemTemplate(item);
+                // Добавление в контеинер
+                searchListContainer.appendChild(companyElement);
+            });
+        }
 
-        let companyElement = companyItemTemplate.cloneNode(true)
+
+
+
+    function prepareCompanyItemTemplate(item){
+        // Запись в переменные значений массива
+        console.log("prepareCompanyItemTemplate")
+        const name = item.value;
+        const inn = item.data.inn;
+        const ogrn = item.data.ogrn;
+        const address = item.data.address?.value;
+
+
+
+        const companyElement = companyItemTemplate.cloneNode(true)
         // Запись элементов
         companyElement.querySelector('.company-name').textContent = 'Название : ' + name;
         companyElement.querySelector('.inn').textContent = 'ИНН : ' + inn;
         companyElement.querySelector('.ogrn').textContent = 'ОГРН : ' + ogrn;
         companyElement.querySelector('.address').textContent = 'Адрес : ' + address;
-        // Сохраняем данные в data-атрибуты самого элемента
-        companyElement.dataset.name = name;
-        companyElement.dataset.inn = inn;
-        companyElement.dataset.ogrn = ogrn;
-        companyElement.dataset.address = address;
         // Назначение кнопок в переменные
-        let infoBtn = companyElement.querySelector('.btn-info');
-        let addBtn = companyElement.querySelector('.btn-add');
-        let deleteBtn = companyElement.querySelector('.btn-delete');
+        const infoBtn = companyElement.querySelector('.btn-info');
+        const addBtn = companyElement.querySelector('.btn-add');
+        const deleteBtn = companyElement.querySelector('.btn-delete');
 
         // Показать
-        infoBtn.addEventListener('click', infoBtnHandler);
+        let elements = document.querySelectorAll(".company-actions")
+            if (infoBtn !== null){
+                infoBtn.addEventListener('click', infoBtnHandler);
+            }
+            if (addBtn !== null){
+                addBtn.addEventListener('click', addBtnHandler);
+            }
+            if (deleteBtn !== null){
+                // Удаление из инфоблока по кнопке
+                deleteBtn.addEventListener('click', deleteBtnHandler);
+            }
 
-        // Добавление в инфоблок по кнопке
-        addBtn.addEventListener('click', addBtnHandler);
-
-        // Удаление из инфоблока по кнопке
-        deleteBtn.addEventListener('click', deleteBtnHandler);
         return companyElement;
-    }
 
+    }
+    //
     function deleteBtnHandler(e){
         e.preventDefault();
         // Получаем элемент, на который нажали
@@ -160,43 +184,28 @@ $jsParams = [
                 iblock_id: 15,
                 INN: companyInn
             },
-            onsuccess: onBtnSuccessHandler,
+            onsuccess: deleteSuccessHandler,
             onfailure:onBtnFailureHandler
         });
     }
 
-    function addBtnHandler(e){
-        e.preventDefault(); //без перезагрузки страницы
-        // Получаем элемент, на который нажали
-        let btn = e.currentTarget;
-        let itemWrapper = btn.closest('.company-item');
-        // Берем данные из data-атрибутов
-        let name = itemWrapper.dataset.name;
-        let inn = itemWrapper.dataset.inn;
-        let ogrn = itemWrapper.dataset.ogrn;
-        let address = itemWrapper.dataset.address;
-        BX.ajax({
-            url: '/local/components/melnik/api.dadata/templates/.default/ajax/save_company.php',
-            method: 'POST',
-            data: {
-                iblock_id: 15,
-                name: name,
-                inn: inn,
-                ogrn: ogrn,
-                address: address
-            },
-            onsuccess: onBtnSuccessHandler,
-            onfailure:onBtnFailureHandler
-        });
-    }
-
-    function onBtnSuccessHandler(response){
+    function addSuccessHandler(response){
         let res = JSON.parse(response)
         console.log(res)
         if (res.success) {
             alert(res.message);
         } else{
             alert(res.error);
+        }
+    }
+
+    function deleteSuccessHandler(itemWrapper, response) {
+        let res = JSON.parse(response);
+        if (res.success) {
+            alert(res.message);
+            itemWrapper.remove(); // удаляем элемент из DOM
+        } else {
+            alert('Ошибка: ' + (res.error || 'Неизвестная ошибка'));
         }
     }
 
@@ -210,13 +219,16 @@ $jsParams = [
         let itemWrapper = btn.closest('.company-item')
         let itemDetailInfo = itemWrapper.querySelector('.company-detail')
         itemDetailInfo.classList.toggle('active')
+        console.log('infoBtnHandler')
     }
 
+
+    //  функция, которая делает запрос
     async function getDataByInn(value){
         let token = "184f3fc305f5e7790c8708bd879e58877174078b";
 
         let url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
-        let requestData = {query: value, count: 5};
+        let requestData = {query: value, count: 3};
 
         let options = {
             method: "POST",
@@ -229,8 +241,9 @@ $jsParams = [
             body: JSON.stringify(requestData)
         };
 
+        // посылает запрос
         return fetch(url, options)
-            .then(response => response.text())
+            .then(response => response.text()) // получает в виде текста
             .then((res) =>{
                 return res
             })
