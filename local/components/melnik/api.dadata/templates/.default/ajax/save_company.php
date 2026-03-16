@@ -1,12 +1,17 @@
 <?php
 // Файл обработки данных из DADATA. обработчик запросов от JavaScript.
 require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php');
-
+header("Content-Type: application/json");
 
 try {
     // Проверка подключенли инфоблок
-    if(!\Bitrix\Main\Loader::includeModule('iblock')){
-        die("Модуль не найден");
+    if(!\Bitrix\Main\Loader::includeModule('iblock')) {
+        header("Content-Type: application/json");
+        echo json_encode([
+            "success" => false,
+            "message" => "Модуль инфоблока не найден"
+        ]);
+        die;
     }
 
     // мои данные из JS

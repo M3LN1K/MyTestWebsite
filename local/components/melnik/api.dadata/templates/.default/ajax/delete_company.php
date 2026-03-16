@@ -4,9 +4,15 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_be
 
 // Проверка подключенли инфоблок
 if(!\Bitrix\Main\Loader::includeModule('iblock')){
-    die("Модуль не найден");
+    header("Content-Type: application/json");
+    echo json_encode([
+        "success" => false,
+        "message" => "Модуль инфоблока не найден"
+    ]);
+    die;
 }
 
+header("Content-Type: application/json");
 
 $iblockId = (int)($_POST['iblock_id'] ?? 0);
 $inn = trim($_POST['INN'] ?? '');
