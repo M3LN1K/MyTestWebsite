@@ -1,0 +1,6 @@
+<?
+$sSectionName = "apidadata";
+$arDirProperties = Array(
+
+);
+?>
