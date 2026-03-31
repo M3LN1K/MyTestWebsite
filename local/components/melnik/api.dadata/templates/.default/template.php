@@ -158,16 +158,16 @@ $jsParams = [
         return companyElement;
 
     }
-    function addBtnHandler(e, res){
+    function addBtnHandler(e){
         e.preventDefault();
-        let btn = e.currentTarget;
+        let addItem = e.currentTarget;
 
         // Берем данные из data-атрибутов
         let companyData = {
-            name: btn.dataset.name,
-            inn: btn.dataset.inn,
-            ogrn: btn.dataset.ogrn,
-            address: btn.dataset.address
+            name: addItem.dataset.name,
+            inn: addItem.dataset.inn,
+            ogrn: addItem.dataset.ogrn,
+            address: addItem.dataset.address
         };
 
         BX.ajax({
@@ -181,18 +181,12 @@ $jsParams = [
                 address : companyData.address
             },
             dataType: "json",
-            onsuccess: successAdd,
+            onsuccess: (response) => successAdd(response),
             onfailure: errorHandler
         })
         console.log('Кнопка активна!!!')
     }
 
-
-
-
-    // catalogButtons.forEach((item) => {
-    //     item.addEventListener("click", catalogBtnHandler);
-    // })
 
     // Для списка из инфоблока
     // Перебор всех элементов по классу и добавление обработчика
@@ -218,7 +212,7 @@ $jsParams = [
             method: "POST",
             data: {iblock_id: 15, INN: companyInn},
             dataType: "json",
-            onsuccess: successDelete,
+            onsuccess: (response) => successDelete(response, itemWrapper),
             onfailure: errorHandler
         })
 
@@ -234,27 +228,72 @@ $jsParams = [
         console.log("Кнопка нажата")
 
     }
+
     // Функция успешного ответа добавления элемента
     function successAdd(response){
-        let res = JSON.parse(response);
-        if (res.success){
-            alert("Компания добавлена успешно" + res.message);
-            console.log("Компания добавлена успешно")
+        console.log("Ответ от сервера: ", response)
+        if (response.success){
+            alert("Компания добавлена успешно!" + " " + response.message);
+            console.log("Компания добавлена успешно");
+
+            // Находим кнопку добавления и компанию из поиска
+            let addBtn = document.querySelector(".btn-add[data-inn='" + response.company_data.inn + "']");
+            if(addBtn){
+                let searchCompanyItem = addBtn.closest(".company-item");
+
+                // Создаем новый элемент для инфоблока на основе существующего HTML
+                let iblockContainer = document.querySelector(".iblock-items-container");
+                let newCompanyItem = searchCompanyItem.cloneNode(true);
+
+                // Меняем кнопку "Добавить" на "Удалить"
+                let addButton = newCompanyItem.querySelector(".btn-add");
+                if(addButton){
+                    addButton.remove(); // Удаляем кнопку "Добавить"
+                    // Добавляем кнопку "Удалить" как в инфоблоке
+                    let actionsDiv = newCompanyItem.querySelector(".company-actions");
+                    let deleteBtn = document.createElement("button");
+                    deleteBtn.className = "btn btn-delete";
+                    deleteBtn.textContent = "Удалить из инфоблока";
+                    actionsDiv.appendChild(deleteBtn);
+                }
+
+                // Меняем текст в названии компании (убираем "Название компании: ")
+                let nameElement = newCompanyItem.querySelector('.company-name');
+                nameElement.textContent = "Наименование: " + response.company_data.name;
+
+                // Обновляем data-атрибуты
+                newCompanyItem.setAttribute('data-id', response.company_data.id);
+                newCompanyItem.setAttribute('data-inn', response.company_data.inn);
+
+                // Добавляем в контейнер инфоблока
+                iblockContainer.appendChild(newCompanyItem);
+
+                // Вешаем обработчики на новые кнопки
+                newCompanyItem.querySelector(".btn-info").addEventListener("click", dopInfoBtnHandler);
+                newCompanyItem.querySelector(".btn-delete").addEventListener("click", deleleBtnHandler);
+
+                // Обновляем коллекции кнопок
+                dopInfoButtons = document.querySelectorAll(".btn-info");
+                deleteCompanyButtons = document.querySelectorAll(".btn-delete");
+
+                // Удаляем компанию из результатов поиска
+                searchCompanyItem.remove();
+            }
         }else{
-            alert("Ошибка добавления" + res.error);
-            console.log("Ошибка добавления")
+            alert("Ошибка добавления: " + (response.error || "Неизвестная ошибка"));
+            console.log("Ошибка добавления", response);
         }
     }
     // Функция успешного удаления элемента
-    function successDelete (itemWrapper, response){
-        let res = JSON.parse(response);
-        console.log("Ответ от сервера: ", res)
-        if ("Success" + res.success()){
-            alert(res.message);
+    function successDelete (response, itemWrapper){
+        console.log("Ответ от сервера: ", response)
+        if (response.success){
+
             itemWrapper.remove(); // Удаление элемента
+            alert("Компания успешно удалена!" + " " + response.message);
             console.log("Компания удалена успешно");
         }else{
-            alert("Error" + (res.error || "Undefined error"));
+            alert("Error" + " " + (response.error || "Undefined error"));
             console.log("Ошибка удаления");
         }
         console.log("Кнопка нажата!")
@@ -264,15 +303,6 @@ $jsParams = [
         alert("Ошибка");
         console.log("Ошибка");
     }
-
-    // Обработчик кнопки каталог
-    // function catalogBtnHandler(e){
-    //     let curentTarget = e.currentTarget
-    //     let buttonSpan = curentTarget.querySelector('span')
-    //     buttonSpan.textContent = "321"
-    //     e.preventDefault()
-    //     console.log(e)
-    // }
 
     // Запрос в дадата
     async function getDataByInn(values){
@@ -299,9 +329,3 @@ $jsParams = [
     }
 
 </script>
-
-
-
-
-
-

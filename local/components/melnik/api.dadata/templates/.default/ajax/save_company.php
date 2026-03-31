@@ -58,7 +58,19 @@ try {
     $elementId = $el->Add($arFields);
 
     if ($elementId) {
-        echo json_encode(['success' => true, 'element_id' => $elementId,'message' => 'Добавлена']);
+        // ВОТ ЗДЕСЬ ГЛАВНОЕ ИСПРАВЛЕНИЕ - добавляем company_data в ответ
+        echo json_encode([
+            'success' => true,
+            'element_id' => $elementId,
+            'message' => 'Добавлена',
+            'company_data' => [  // <--- ЭТО НУЖНО ДОБАВИТЬ
+                'id' => $elementId,
+                'name' => $name,
+                'inn' => $inn,
+                'ogrn' => $ogrn,
+                'address' => $address
+            ]
+        ]);
     } else {
         // Логируем ошибку
         file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/local/debug.log',
